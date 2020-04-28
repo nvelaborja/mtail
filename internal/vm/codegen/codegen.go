@@ -394,6 +394,7 @@ func getOpcodeForType(op int, opT types.Type) (code.Opcode, error) {
 }
 
 var builtin = map[string]code.Opcode{
+	"capturelog":  code.CaptureLog,
 	"getfilename": code.Getfilename,
 	"len":         code.Length,
 	"settime":     code.Settime,

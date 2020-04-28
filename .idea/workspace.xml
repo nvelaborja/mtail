@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="09781602-695c-43e6-801f-949dbcd6715b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/cmd/mtail/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/mtail/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/mtail/mtail.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/mtail/mtail.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/mtail/options.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/mtail/options.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/vm/code/opcodes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/vm/code/opcodes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/vm/codegen/codegen.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/vm/codegen/codegen.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/vm/compiler.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/vm/compiler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/vm/compiler_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/vm/compiler_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/vm/fuzz.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/vm/fuzz.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/vm/loader.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/vm/loader.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/vm/parser/lexer.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/vm/parser/lexer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/vm/types/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/vm/types/types.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/vm/vm.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/vm/vm.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/vm/vm_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/vm/vm_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mtail-mode.el" beforeDir="false" afterPath="$PROJECT_DIR$/mtail-mode.el" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="GOROOT" path="/usr/local/go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="projectSyncType">
+      <map>
+        <entry key="$PROJECT_DIR$/../../../automation/performance" value="PREVIEW" />
+        <entry key="$PROJECT_DIR$/../../../cdc" value="PREVIEW" />
+      </map>
+    </option>
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1aoyQ0K6lXON0hie5SZYI4GceQQ" />
+  <component name="ProjectViewState">
+    <option name="abbreviatePackageNames" value="true" />
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/test" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Build.mtail">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file id="idea.log" enabled="true" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="mtail oneshot" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="mtail" />
+      <working_directory value="$PROJECT_DIR$" />
+      <parameters value="--progs $PROJECT_DIR$/test --logs &quot;$PROJECT_DIR$/../../../ce-tools/myApp.log&quot; --one_shot" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/cmd/mtail/main.go" />
+      <package value="github.com/google/mtail/cmd/mtail" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <configuration name="mtail" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="mtail" />
+      <working_directory value="$PROJECT_DIR$" />
+      <parameters value="--progs test --logs &quot;$PROJECT_DIR$/../../../ce-tools/*.log&quot; --log_capture_out &quot;$PROJECT_DIR$/test/log_capture.log&quot; --log_capture_error_out &quot;$PROJECT_DIR$/test/log_capture_error.log&quot;" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/cmd/mtail/main.go" />
+      <package value="github.com/google/mtail/cmd/mtail" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestOpcodeHasString in github.com/google/mtail/internal/vm/code" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="mtail" />
+      <working_directory value="$PROJECT_DIR$/internal/vm/code" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/google/mtail/internal/vm/code" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestOpcodeHasString$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="all" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/Makefile" target="all" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Go Build.mtail" />
+      <item itemvalue="Go Build.mtail oneshot" />
+      <item itemvalue="Go Test.TestOpcodeHasString in github.com/google/mtail/internal/vm/code" />
+      <item itemvalue="Makefile.all" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Test.TestOpcodeHasString in github.com/google/mtail/internal/vm/code" />
+        <item itemvalue="Makefile.all" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+    <proxy>direct</proxy>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="880" y="396" key="#GOROOT" timestamp="1587416467167">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="880" y="396" key="#GOROOT/-2560.0.2560.1440/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1587416467167" />
+    <state x="880" y="385" key="#Go_Modules_(vgo)" timestamp="1587416482721">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="880" y="385" key="#Go_Modules_(vgo)/-2560.0.2560.1440/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1587416482721" />
+    <state x="613" y="173" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588031599139">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="1175" y="579" key="#com.intellij.execution.impl.EditConfigurationsDialog/-2560.0.2560.1440/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1587509156824" />
+    <state x="613" y="173" key="#com.intellij.execution.impl.EditConfigurationsDialog/2560.0.2560.1440/-2560.0.2560.1440/0.0.2560.1440@0.0.2560.1440" timestamp="1587666740057" />
+    <state x="613" y="173" key="#com.intellij.execution.impl.EditConfigurationsDialog/2560.0.2560.1440/0.0.2560.1440/-2560.0.2560.1440@0.0.2560.1440" timestamp="1588031599139" />
+    <state x="1016" y="530" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588030856202">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="1016" y="530" key="#com.intellij.fileTypes.FileTypeChooser/2560.0.2560.1440/0.0.2560.1440/-2560.0.2560.1440@0.0.2560.1440" timestamp="1588030856202" />
+    <state x="100" y="100" width="2360" height="1240" key="DiffContextDialog" timestamp="1587760531078">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="100" y="100" width="2360" height="1240" key="DiffContextDialog/2560.0.2560.1440/-2560.0.2560.1440/0.0.2560.1440@0.0.2560.1440" timestamp="1587760531078" />
+    <state width="2518" height="423" key="GridCell.Tab.0.bottom" timestamp="1588032159829">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state width="2518" height="423" key="GridCell.Tab.0.bottom/-2560.0.2560.1440/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1587514711148" />
+    <state width="2518" height="423" key="GridCell.Tab.0.bottom/-2560.23.2560.1417/0.0.2560.1440/2560.23.2560.1417@0.0.2560.1440" timestamp="1587492536611" />
+    <state width="2518" height="475" key="GridCell.Tab.0.bottom/2560.0.2560.1440/-2560.0.2560.1440/0.0.2560.1440@0.0.2560.1440" timestamp="1587767277074" />
+    <state width="2518" height="423" key="GridCell.Tab.0.bottom/2560.0.2560.1440/0.0.2560.1440/-2560.0.2560.1440@0.0.2560.1440" timestamp="1588032159829" />
+    <state width="2518" height="475" key="GridCell.Tab.0.bottom/2560.23.2560.1417/0.0.2560.1440/-2560.23.2560.1417@0.0.2560.1440" timestamp="1588013270881" />
+    <state width="2518" height="423" key="GridCell.Tab.0.center" timestamp="1588032159828">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state width="2518" height="423" key="GridCell.Tab.0.center/-2560.0.2560.1440/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1587514711147" />
+    <state width="2518" height="423" key="GridCell.Tab.0.center/-2560.23.2560.1417/0.0.2560.1440/2560.23.2560.1417@0.0.2560.1440" timestamp="1587492536610" />
+    <state width="2518" height="475" key="GridCell.Tab.0.center/2560.0.2560.1440/-2560.0.2560.1440/0.0.2560.1440@0.0.2560.1440" timestamp="1587767277072" />
+    <state width="2518" height="423" key="GridCell.Tab.0.center/2560.0.2560.1440/0.0.2560.1440/-2560.0.2560.1440@0.0.2560.1440" timestamp="1588032159828" />
+    <state width="2518" height="475" key="GridCell.Tab.0.center/2560.23.2560.1417/0.0.2560.1440/-2560.23.2560.1417@0.0.2560.1440" timestamp="1588013270879" />
+    <state width="2518" height="423" key="GridCell.Tab.0.left" timestamp="1588032159828">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state width="2518" height="423" key="GridCell.Tab.0.left/-2560.0.2560.1440/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1587514711146" />
+    <state width="2518" height="423" key="GridCell.Tab.0.left/-2560.23.2560.1417/0.0.2560.1440/2560.23.2560.1417@0.0.2560.1440" timestamp="1587492536609" />
+    <state width="2518" height="475" key="GridCell.Tab.0.left/2560.0.2560.1440/-2560.0.2560.1440/0.0.2560.1440@0.0.2560.1440" timestamp="1587767277070" />
+    <state width="2518" height="423" key="GridCell.Tab.0.left/2560.0.2560.1440/0.0.2560.1440/-2560.0.2560.1440@0.0.2560.1440" timestamp="1588032159828" />
+    <state width="2518" height="475" key="GridCell.Tab.0.left/2560.23.2560.1417/0.0.2560.1440/-2560.23.2560.1417@0.0.2560.1440" timestamp="1588013270878" />
+    <state width="2518" height="423" key="GridCell.Tab.0.right" timestamp="1588032159829">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state width="2518" height="423" key="GridCell.Tab.0.right/-2560.0.2560.1440/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1587514711147" />
+    <state width="2518" height="423" key="GridCell.Tab.0.right/-2560.23.2560.1417/0.0.2560.1440/2560.23.2560.1417@0.0.2560.1440" timestamp="1587492536611" />
+    <state width="2518" height="475" key="GridCell.Tab.0.right/2560.0.2560.1440/-2560.0.2560.1440/0.0.2560.1440@0.0.2560.1440" timestamp="1587767277073" />
+    <state width="2518" height="423" key="GridCell.Tab.0.right/2560.0.2560.1440/0.0.2560.1440/-2560.0.2560.1440@0.0.2560.1440" timestamp="1588032159829" />
+    <state width="2518" height="475" key="GridCell.Tab.0.right/2560.23.2560.1417/0.0.2560.1440/-2560.23.2560.1417@0.0.2560.1440" timestamp="1588013270880" />
+    <state x="789" y="359" key="SettingsEditor" timestamp="1587490624538">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="789" y="359" key="SettingsEditor/-2560.0.2560.1440/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1587490624538" />
+    <state width="1080" height="720" key="XDebugger.FullValuePopup" timestamp="1587687299402">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state width="1080" height="720" key="XDebugger.FullValuePopup/-2560.0.2560.1440/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1587425904092" />
+    <state width="1080" height="720" key="XDebugger.FullValuePopup/2560.0.2560.1440/-2560.0.2560.1440/0.0.2560.1440@0.0.2560.1440" timestamp="1587687299402" />
+    <state x="526" y="122" width="1409" height="1182" key="find.popup" timestamp="1588031481132">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="526" y="122" width="1409" height="1182" key="find.popup/-2560.0.2560.1440/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1587488997325" />
+    <state x="526" y="122" width="1409" height="1182" key="find.popup/2560.0.2560.1440/-2560.0.2560.1440/0.0.2560.1440@0.0.2560.1440" timestamp="1587764799831" />
+    <state x="526" y="122" width="1409" height="1182" key="find.popup/2560.0.2560.1440/0.0.2560.1440/-2560.0.2560.1440@0.0.2560.1440" timestamp="1588031481132" />
+    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup" timestamp="1588030950574">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/-2560.0.2560.1440/0.0.2560.1440/2560.0.2560.1440@0.0.2560.1440" timestamp="1587489071335" />
+    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/2560.0.2560.1440/-2560.0.2560.1440/0.0.2560.1440@0.0.2560.1440" timestamp="1587763327742" />
+    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/2560.0.2560.1440/0.0.2560.1440/-2560.0.2560.1440@0.0.2560.1440" timestamp="1588030950574" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/vm/parser/parser.go</url>
+          <line>521</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/vm/parser/parser.go</url>
+          <line>422</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/vm/parser/parser.go</url>
+          <line>525</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/vm/ast/ast.go</url>
+          <line>109</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/vm/loader.go</url>
+          <line>200</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/vm/compiler.go</url>
+          <line>40</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/vm/codegen/codegen.go</url>
+          <line>583</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/vm/codegen/codegen.go</url>
+          <line>588</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/vm/codegen/codegen.go</url>
+          <line>37</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/vm/vm.go</url>
+          <line>1050</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

@@ -198,7 +198,7 @@ func (l *Loader) WriteStatusHTML(w io.Writer) error {
 // the same name remains running.
 func (l *Loader) CompileAndRun(name string, input io.Reader) error {
 	glog.V(2).Infof("CompileAndRun %s", name)
-	v, errs := Compile(name, input, l.dumpAst, l.dumpAstTypes, l.syslogUseCurrentYear, l.overrideLocation)
+	v, errs := Compile(name, input, l.dumpAst, l.dumpAstTypes, l.syslogUseCurrentYear, l.overrideLocation, l.logCaptureFile, l.logCaptureErrorFile)
 	if errs != nil {
 		ProgLoadErrors.Add(name, 1)
 		return errors.Errorf("compile failed for %s:\n%s", name, errs)
@@ -247,6 +247,8 @@ type Loader struct {
 	w           watcher.Watcher       // watches for program changes
 	reg         prometheus.Registerer // plce to reg metrics
 	programPath string                // Path that contains mtail programs.
+	logCaptureFile 		string 		  // Path to output file for log capture data.
+	logCaptureErrorFile string 		  // Path to output file for log capture error data.
 
 	handleMu sync.RWMutex   // guards accesses to handles
 	handles  map[string]*VM // map of program names to virtual machines
@@ -323,16 +325,18 @@ func PrometheusRegisterer(reg prometheus.Registerer) func(l *Loader) error {
 }
 
 // NewLoader creates a new program loader that reads programs from programPath.
-func NewLoader(programPath string, store *metrics.Store, w watcher.Watcher, options ...func(*Loader) error) (*Loader, error) {
+func NewLoader(programPath string, logCaptureFile string, logCaptureErrorFile string, store *metrics.Store, w watcher.Watcher, options ...func(*Loader) error) (*Loader, error) {
 	if store == nil {
 		return nil, errors.New("loader needs a store")
 	}
 	l := &Loader{
-		ms:            store,
-		w:             w,
-		programPath:   programPath,
-		handles:       make(map[string]*VM),
-		programErrors: make(map[string]error),
+		ms:            			store,
+		w:             			w,
+		programPath:   			programPath,
+		logCaptureFile:  		logCaptureFile,
+		logCaptureErrorFile: 	logCaptureErrorFile,
+		handles:       			make(map[string]*VM),
+		programErrors: 			make(map[string]error),
 	}
 	if err := l.SetOption(options...); err != nil {
 		return nil, err

@@ -19,6 +19,22 @@ func ProgramPath(path string) func(*Server) error {
 	}
 }
 
+// LogCaptureFile sets the output path for log capture data.
+func LogCaptureFile(path string) func(*Server) error {
+	return func(m *Server) error {
+		m.logCaptureFile = path
+		return nil
+	}
+}
+
+// LogCaptureErrorFile sets the output path for log capture error data.
+func LogCaptureErrorFile(path string) func(*Server) error {
+	return func(m *Server) error {
+		m.logCaptureErrorFile = path
+		return nil
+	}
+}
+
 // LogPathPatterns sets the patterns to find log paths in the Server.
 func LogPathPatterns(patterns ...string) func(*Server) error {
 	return func(m *Server) error {

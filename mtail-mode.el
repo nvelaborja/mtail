@@ -66,7 +66,7 @@
   "All keywords in the mtail language.  Used for font locking.")
 
 (defconst mtail-mode-builtins
-  '("bool" "float" "getfilename" "int" "len" "settime" "string" "strptime" "strtol" "timestamp" "tolower")
+  '("bool" "capturelog" "float" "getfilename" "int" "len" "settime" "string" "strptime" "strtol" "timestamp" "tolower")
   "All builtins in the mtail language.  Used for font locking.")
 
 (defvar mtail-mode-font-lock-defaults

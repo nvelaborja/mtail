@@ -39,6 +39,7 @@ var keywords = map[string]Kind{
 // List of builtin functions.  Keep this list sorted!
 var builtins = []string{
 	"bool",
+	"capturelog",
 	"float",
 	"getfilename",
 	"int",

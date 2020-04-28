@@ -37,6 +37,8 @@ var (
 	port               = flag.String("port", "3903", "HTTP port to listen on.")
 	address            = flag.String("address", "", "Host or IP address on which to bind HTTP listener")
 	progs              = flag.String("progs", "", "Name of the directory containing mtail programs")
+	logCaptureOut 	   = flag.String("log_capture_out", "", "Path to output file for log capture data.")
+	logCaptureErrorOut = flag.String("log_capture_error_out", "", "Path to output file for log capture error data.")
 	ignoreRegexPattern = flag.String("ignore_filename_regex_pattern", "", "")
 
 	version = flag.Bool("version", false, "Print mtail version information.")
@@ -137,6 +139,8 @@ func main() {
 	}
 	opts := []func(*mtail.Server) error{
 		mtail.ProgramPath(*progs),
+		mtail.LogCaptureFile(*logCaptureOut),
+		mtail.LogCaptureErrorFile(*logCaptureErrorOut),
 		mtail.LogPathPatterns(logs...),
 		mtail.IgnoreRegexPattern(*ignoreRegexPattern),
 		mtail.BindAddress(*address, *port),

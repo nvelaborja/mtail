@@ -68,11 +68,13 @@ type Server struct {
 	closeQuit chan struct{} // Channel to signal shutdown from code.
 	closeOnce sync.Once     // Ensure shutdown happens only once.
 
-	bindAddress        string    // address to bind HTTP server
-	buildInfo          BuildInfo // go build information
-	programPath        string    // path to programs to load
-	logPathPatterns    []string  // list of patterns to watch for log files to tail
-	ignoreRegexPattern string
+	bindAddress        	string    // address to bind HTTP server
+	buildInfo          	BuildInfo // go build information
+	programPath        	string    // path to programs to load
+	logPathPatterns    	[]string  // list of patterns to watch for log files to tail
+	ignoreRegexPattern 	string
+	logCaptureFile 	   	string 	  // Path to output file for log capture data.
+	logCaptureErrorFile string    // Path to output file for log capture error data.
 
 	oneShot      bool // if set, mtail reads log files from the beginning, once, then exits
 	compileOnly  bool // if set, mtail compiles programs then exits
@@ -134,7 +136,7 @@ func (m *Server) initLoader() error {
 		opts = append(opts, vm.OverrideLocation(m.overrideLocation))
 	}
 	var err error
-	m.l, err = vm.NewLoader(m.programPath, m.store, m.w, opts...)
+	m.l, err = vm.NewLoader(m.programPath, m.logCaptureFile, m.logCaptureErrorFile, m.store, m.w, opts...)
 	if err != nil {
 		return err
 	}

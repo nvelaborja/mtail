@@ -8,9 +8,11 @@ package vm
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"math"
+	"os"
 	"regexp"
 	"runtime/debug"
 	"strconv"
@@ -40,7 +42,9 @@ var (
 		Buckets:   prometheus.ExponentialBuckets(0.00002, 2.0, 10),
 	}, []string{"prog"})
 
-	runtimeLogError = flag.Bool("vm_logs_runtime_errors", true, "Enables logging of runtime errors to the standard log.  Set to false to only have the errors printed to the HTTP console.")
+	runtimeLogError          	= flag.Bool("vm_logs_runtime_errors", true, "Enables logging of runtime errors to the standard log.  Set to false to only have the errors printed to the HTTP console.")
+	defaultLogCaptureFile      	= "log_capture.log"
+	defaultLogCaptureErrorFile 	= "log_capture_error.log"
 )
 
 type thread struct {
@@ -69,6 +73,8 @@ type VM struct {
 
 	input *logline.LogLine // Log line input to this round of execution.
 
+	previousInput *logline.LogLine // Log line input from last round of execution.
+
 	terminate bool // Flag to stop the VM on this line of input.
 
 	HardCrash bool // User settable flag to make the VM crash instead of recover on panic.
@@ -78,6 +84,24 @@ type VM struct {
 
 	syslogUseCurrentYear bool           // Overwrite zero years with the current year in a strptime.
 	loc                  *time.Location // Override local timezone with provided, if not empty
+	logCaptureFile       string         // Path to output file for log capture data.
+	logCaptureErrorFile  string         // Path to output file for log capture error data.
+	lastLogCapture       time.Time      // Time of last log capture
+}
+
+// LineMatch holds relevant data representing the matching of a log line
+// by a particular regular expression.
+type LineMatch struct {
+	Prog      string // Mtail prog file responsible for the match
+	Exp       string // Regular expression used in match
+	File      string // File that the log line originated from
+	Logline   string // Log line that was matched
+	Previous  string // Log line before the matched line
+	Timestamp int64  // Timestamp for creation in millis
+}
+
+func (lm *LineMatch) toJson() ([]byte, error) {
+	return json.Marshal(lm)
 }
 
 // Push a value onto the stack
@@ -890,6 +914,25 @@ func (v *VM) execute(t *thread, i code.Instr) {
 		}
 		t.Push(a + b)
 
+	case code.CaptureLog:
+		// Get logCaptureDelay int argument.
+		logCaptureDelay, err := t.PopInt()
+
+		if (err != nil) {
+			v.errorf("%s", err)
+			return
+		}
+
+		// Get capturePreviousLog boolean argument. Anything other than '0' will be treated as true.
+		capturePreviousLog, err := t.PopInt()
+
+		if (err != nil) {
+			v.errorf("%s", err)
+			return
+		}
+
+		t.Push(v.captureLog(capturePreviousLog != 0, logCaptureDelay))
+
 	default:
 		v.errorf("illegal instruction: %d", i.Opcode)
 	}
@@ -912,7 +955,10 @@ func (v *VM) ProcessLogLine(ctx context.Context, line *logline.LogLine) {
 	t.stack = make([]interface{}, 0)
 	t.matches = make(map[int][]string, len(v.re))
 	_, span1 := trace.StartSpan(ctx, "execute loop")
-	defer span1.End()
+	defer func() {
+		v.previousInput = line
+		span1.End()
+	}()
 	for {
 		if t.pc >= len(v.prog) {
 			span1.AddAttributes(trace.BoolAttribute("vm.terminated", false))
@@ -932,7 +978,18 @@ func (v *VM) ProcessLogLine(ctx context.Context, line *logline.LogLine) {
 
 // New creates a new virtual machine with the given name, and compiler
 // artifacts for executable and data segments.
-func New(name string, obj *object.Object, syslogUseCurrentYear bool, loc *time.Location) *VM {
+func New(name string, obj *object.Object, syslogUseCurrentYear bool, loc *time.Location, logCaptureFile string, logCaptureErrorFile string) *VM {
+
+	logOut := logCaptureFile
+	if logOut == "" {
+		logOut = defaultLogCaptureFile
+	}
+
+	logError := logCaptureErrorFile
+	if logError == "" {
+		logError = defaultLogCaptureErrorFile
+	}
+
 	return &VM{
 		name:                 name,
 		re:                   obj.Regexps,
@@ -942,6 +999,8 @@ func New(name string, obj *object.Object, syslogUseCurrentYear bool, loc *time.L
 		timeMemos:            lru.New(64),
 		syslogUseCurrentYear: syslogUseCurrentYear,
 		loc:                  loc,
+		logCaptureFile:       logOut,
+		logCaptureErrorFile:  logError,
 	}
 }
 
@@ -981,4 +1040,64 @@ func (v *VM) RuntimeErrorString() string {
 	v.runtimeErrorMu.RLock()
 	defer v.runtimeErrorMu.RUnlock()
 	return v.runtimeError
+}
+
+// captureLog sends a matched log to the appropriate collection log
+// param capturePreviousLog 	when true, will include the log line that came before the captured line in output.
+// param captureDelay 			time in seconds that log capture should be paused after a successful capture.
+func (v *VM) captureLog(capturePreviousLog bool, captureDelay int64) int {
+	// If capture delay is specified, check to see if we can capture log yet
+	if captureDelay > 0 {
+		if v.lastLogCapture.Add(time.Second * time.Duration(captureDelay)).After(time.Now()) {
+			// Still haven't reached end of delay, keep waiting
+			return 0
+		}
+	}
+
+	// Gather match data
+	now := time.Now().UnixNano() / int64(time.Millisecond)
+	lm := LineMatch{Prog: v.name, Exp: v.re[0].String(), File: v.input.Filename, Logline: v.input.Line, Timestamp: now}
+
+	if capturePreviousLog {
+		lm.Previous = v.previousInput.Line
+	}
+
+	output, err := lm.toJson()
+
+	if err != nil {
+		// Log to error log file
+		errorfile, _ := os.OpenFile(v.logCaptureErrorFile, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+		defer errorfile.Close()
+		errorfile.WriteString("Failed to serialize line match data.")
+
+		return 0
+	}
+
+	// Log match data
+	logfile, err := os.OpenFile(v.logCaptureFile, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+
+	if err != nil {
+		// Log to error log file
+		errorfile, _ := os.OpenFile(v.logCaptureErrorFile, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+		defer errorfile.Close()
+		errorfile.WriteString("Failed to open output file.")
+
+		return 0
+	}
+
+	defer logfile.Close()
+
+	if _, err := logfile.WriteString(string(output) + "\n"); err != nil {
+		// Log to error log file
+		errorfile, _ := os.OpenFile(v.logCaptureErrorFile, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+		defer errorfile.Close()
+		errorfile.WriteString("Failed to write to output file.")
+
+		return 0
+	}
+
+	// With log successfully captured, update lastLogCapture
+	v.lastLogCapture = time.Now()
+
+	return 1
 }

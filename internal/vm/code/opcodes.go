@@ -74,6 +74,8 @@ const (
 	Fcmp // floating point compare
 	Scmp // string compare
 
+	CaptureLog					// Capture the matched log line and output to the capture log with given options
+
 	lastOpcode
 )
 
@@ -134,6 +136,7 @@ var opNames = map[Opcode]string{
 	Icmp:        "icmp",
 	Fcmp:        "fcmp",
 	Scmp:        "scmp",
+	CaptureLog:	 "capturelog",
 }
 
 func (o Opcode) String() string {

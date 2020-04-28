@@ -1,0 +1,5 @@
+counter error_log_count
+
+/.*ERROR.*/ {
+    error_log_count += capturelog(0, 4)
+}

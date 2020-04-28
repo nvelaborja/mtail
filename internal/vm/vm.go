@@ -42,9 +42,9 @@ var (
 		Buckets:   prometheus.ExponentialBuckets(0.00002, 2.0, 10),
 	}, []string{"prog"})
 
-	runtimeLogError          	= flag.Bool("vm_logs_runtime_errors", true, "Enables logging of runtime errors to the standard log.  Set to false to only have the errors printed to the HTTP console.")
-	defaultLogCaptureFile      	= "log_capture.log"
-	defaultLogCaptureErrorFile 	= "log_capture_error.log"
+	runtimeLogError            = flag.Bool("vm_logs_runtime_errors", true, "Enables logging of runtime errors to the standard log.  Set to false to only have the errors printed to the HTTP console.")
+	defaultLogCaptureFile      = "log_capture.log"
+	defaultLogCaptureErrorFile = "log_capture_error.log"
 )
 
 type thread struct {
@@ -89,9 +89,8 @@ type VM struct {
 	lastLogCapture       time.Time      // Time of last log capture
 }
 
-// LineMatch holds relevant data representing the matching of a log line
-// by a particular regular expression.
-type LineMatch struct {
+// LogCaptureData holds relevant data representing a log capture event
+type LogCaptureData struct {
 	Prog      string // Mtail prog file responsible for the match
 	Exp       string // Regular expression used in match
 	File      string // File that the log line originated from
@@ -100,8 +99,22 @@ type LineMatch struct {
 	Timestamp int64  // Timestamp for creation in millis
 }
 
-func (lm *LineMatch) toJson() ([]byte, error) {
-	return json.Marshal(lm)
+func (lc *LogCaptureData) toJson() ([]byte, error) {
+	return json.Marshal(lc)
+}
+
+// LogCaptureErrorData holds relevant data representing the failure of a log capture event
+type LogCaptureErrorData struct {
+	Prog      string // Mtail prog file responsible for the match
+	Exp       string // Regular expression used in match
+	File      string // File that the log line originated from
+	Logline   string // Log line that was matched
+	Error     string // Error message
+	Timestamp int64  // Timestamp for creation in millis
+}
+
+func (lc *LogCaptureErrorData) toJson() ([]byte, error) {
+	return json.Marshal(lc)
 }
 
 // Push a value onto the stack
@@ -918,7 +931,7 @@ func (v *VM) execute(t *thread, i code.Instr) {
 		// Get logCaptureDelay int argument.
 		logCaptureDelay, err := t.PopInt()
 
-		if (err != nil) {
+		if err != nil {
 			v.errorf("%s", err)
 			return
 		}
@@ -926,7 +939,7 @@ func (v *VM) execute(t *thread, i code.Instr) {
 		// Get capturePreviousLog boolean argument. Anything other than '0' will be treated as true.
 		capturePreviousLog, err := t.PopInt()
 
-		if (err != nil) {
+		if err != nil {
 			v.errorf("%s", err)
 			return
 		}
@@ -1056,20 +1069,16 @@ func (v *VM) captureLog(capturePreviousLog bool, captureDelay int64) int {
 
 	// Gather match data
 	now := time.Now().UnixNano() / int64(time.Millisecond)
-	lm := LineMatch{Prog: v.name, Exp: v.re[0].String(), File: v.input.Filename, Logline: v.input.Line, Timestamp: now}
+	lc := LogCaptureData{Prog: v.name, Exp: v.re[0].String(), File: v.input.Filename, Logline: v.input.Line, Timestamp: now}
 
 	if capturePreviousLog {
-		lm.Previous = v.previousInput.Line
+		lc.Previous = v.previousInput.Line
 	}
 
-	output, err := lm.toJson()
+	output, err := lc.toJson()
 
 	if err != nil {
-		// Log to error log file
-		errorfile, _ := os.OpenFile(v.logCaptureErrorFile, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
-		defer errorfile.Close()
-		errorfile.WriteString("Failed to serialize line match data.")
-
+		v.captureLogError(err)
 		return 0
 	}
 
@@ -1077,22 +1086,20 @@ func (v *VM) captureLog(capturePreviousLog bool, captureDelay int64) int {
 	logfile, err := os.OpenFile(v.logCaptureFile, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
 
 	if err != nil {
-		// Log to error log file
-		errorfile, _ := os.OpenFile(v.logCaptureErrorFile, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
-		defer errorfile.Close()
-		errorfile.WriteString("Failed to open output file.")
-
+		v.captureLogError(err)
 		return 0
 	}
 
-	defer logfile.Close()
+	defer func() {
+		fileCloseErr := logfile.Close()
+
+		if (fileCloseErr != nil) {
+			v.captureLogError(fileCloseErr)
+		}
+	}()
 
 	if _, err := logfile.WriteString(string(output) + "\n"); err != nil {
-		// Log to error log file
-		errorfile, _ := os.OpenFile(v.logCaptureErrorFile, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
-		defer errorfile.Close()
-		errorfile.WriteString("Failed to write to output file.")
-
+		v.captureLogError(err)
 		return 0
 	}
 
@@ -1100,4 +1107,40 @@ func (v *VM) captureLog(capturePreviousLog bool, captureDelay int64) int {
 	v.lastLogCapture = time.Now()
 
 	return 1
+}
+
+// captureLogError attempts to gather as much data as possible about a log capture failure and log it to
+// the logCaptureErrorFile. If failure happen here, we resort to standard error logging.
+func (v *VM) captureLogError(err error) {
+	// Gather data
+	now := time.Now().UnixNano() / int64(time.Millisecond)
+	ed := LogCaptureErrorData{Prog: v.name, Exp: v.re[0].String(), File: v.input.Filename, Logline: v.input.Line, Timestamp: now, Error: err.Error()}
+
+	// Get json
+	output, jsonErr := ed.toJson()
+
+	if jsonErr != nil {
+		v.errorf("LogCaptureErrorData json serialization failed.", jsonErr)
+	}
+
+	// Try to log
+	errorfile, openFileErr := os.OpenFile(v.logCaptureErrorFile, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+
+	if openFileErr != nil {
+		v.errorf("Failed to open logCaptureErrorFile.", openFileErr)
+	}
+
+	defer func() {
+		fileCloseErr := errorfile.Close()
+
+		if fileCloseErr != nil {
+			v.errorf("Failed to close logCaptureErrorFile.", fileCloseErr)
+		}
+	}()
+
+	_, writeErr := errorfile.WriteString(string(output) + "\n")
+
+	if writeErr != nil {
+		v.errorf("Failed to write to logCaptureErrorFile.", writeErr)
+	}
 }
